@@ -11,19 +11,24 @@ const cheerio = require("cheerio")
 //We need a get route for scraping the Rotoworld News
 router.get("/scrape", function (request, response) {
     //First we grab the body of the html with axios
-    axios.get("https://www.rotoworld.com/sports/nfl/football/").then(function(response) {
+    axios.get("https://www.fantasypros.com/nfl/").then(function(response) {
         //Then we load that into cheerio and save it to $ for the shorthand selector
         let $ = cheerio.load(response.data)
-        console.log("headline list: ", $("ul.headline_list"))
+        let grabbedElement = $(".news-articles__container")
+        .find(".clearfix")
+        .find(".sport-article-news__content-wrapper")
+        .find(".sport-article-news__content--articles")
+        .find(".news-articles__item")
+        
         //Now, we grab every headline title tag and do the following
-        $("ul.headline_list").each(function(i, element) {
+        $(grabbedElement).each(function(i, element) {
             
             //Save an empty result object
             const result = {}
 
             //Add the text and href of every link, save them as properties of result
-            result.title = $(element).find(".headline").find(".headline_title").text()
-            result.link = $(element).find(".headline").find(".headline_title").find("a").attr("href")
+            result.title = $(element).find(".news-articles__article-title").find("a").text()
+            result.link = $(element).find(".news-articles__article-title").find("a").attr("href")
 
             //Create a new Scraper using the result obj built from scraping
             db.Scraper.create(result).then((dbScraper => {
