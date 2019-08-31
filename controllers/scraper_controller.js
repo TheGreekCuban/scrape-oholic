@@ -29,7 +29,7 @@ router.get("/scrape", function (request, response) {
             //Add the text and href of every link, save them as properties of result
             result.title = $(element).find(".news-articles__article-title").find("a").text()
             result.link = $(element).find(".news-articles__article-title").find("a").attr("href")
-
+            
             //Create a new Scraper using the result obj built from scraping
             db.Scraper.create(result).then((dbScraper => {
                 console.log(dbScraper)
