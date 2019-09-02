@@ -15,6 +15,8 @@ router.get("/scrape", function (request, response) {
         //Then we load that into cheerio and save it to $ for the shorthand selector
         let $ = cheerio.load(response.data)
         let grabbedElement = $(".trd-article-lists-content").find("a")
+        let removedItem = $(".trd-article-lists-content").find("a").find(".sponsored").find(".next")
+        removedItem.remove()
         
         //Now, we grab every headline title tag and do the following
         $(grabbedElement).each(function(i, element) {
@@ -33,7 +35,6 @@ router.get("/scrape", function (request, response) {
             })).catch(error => {
                 console.log(error, "this is the error")
             })
-            console.log("result: ", result)
         })
     })
     response.send("Scrape Complete!")
