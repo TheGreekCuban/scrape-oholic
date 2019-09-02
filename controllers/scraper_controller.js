@@ -45,6 +45,15 @@ router.get("/scrape", function (request, response) {
     response.send("Scrape Complete!")
 })
 
+router.get("/articles", (request, response) => {
+    db.Scraper.find({})
+    .then(dbScraper => {
+        response.json(dbScraper)
+    }).catch(error => {
+        response.json(error)
+    })
+})
+
 
 //need this for the server
 module.exports = router
