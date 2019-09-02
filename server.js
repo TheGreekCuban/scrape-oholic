@@ -1,11 +1,20 @@
 const express = require("express")
-const mongoose = require("mongoose")
 const dotenv = require("dotenv").config()
-
-
-//const db = require("./models")
-
 const PORT = process.env.PORT
+const mongoose = require("mongoose")
+
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrape-oholic"
+// Connect to the Mongo DB
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true
+})
+
+const db = mongoose.connection
+db.on("error", console.error.bind(console, "connection error: "))
+db.once("open", function() {
+    console.log("Connected to Mongoose`!")
+})
+
 
 // Initialize Express
 const app = express()
@@ -31,12 +40,7 @@ const routes = require("./controllers/scraper_controller")
 
 app.use(routes)
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrape-oholic"
 
-// Connect to the Mongo DB
-mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true
-})
 
 // Start the server
 app.listen(PORT, function () {

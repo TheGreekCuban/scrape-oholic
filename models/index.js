@@ -2,6 +2,6 @@
 
 module.exports = {
     Scraper: require("./scraper_model"),
-    Note: require("./Note")
+    Note: require("./note_model")
   };
   

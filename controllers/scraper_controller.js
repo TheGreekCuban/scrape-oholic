@@ -30,15 +30,21 @@ router.get("/scrape", function (request, response) {
             result.description = $(element).find(".trd-article-body").find(".trd-article-excerpt").text()
             result.meta = $(element).find(".trd-article-body").find(".trd-article-meta").text()
             //Create a new Scraper using the result obj built from scraping
-            db.Scraper.create(result).then((dbScraper => {
-                console.log("Db Scraper: ", dbScraper)
-            })).catch(error => {
-                console.log(error, "this is the error")
+
+            db.Scraper.findOne({title: result.title}, (error, existingArticle) => {
+              if(existingArticle === null) {
+                db.Scraper.create(result).then((dbScraper => {
+                  console.log("Db Scraper: ", dbScraper)
+                })).catch(error => {
+                    console.log(`No duplicate entries allowed!`)
+                })
+              }
             })
         })
     })
     response.send("Scrape Complete!")
 })
+
 
 //need this for the server
 module.exports = router
