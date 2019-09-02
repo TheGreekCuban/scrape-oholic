@@ -45,7 +45,9 @@ router.get("/scrape", function (request, response) {
     response.send("Scrape Complete!")
 })
 
+//We need a get route to get all the articles from the DB
 router.get("/articles", (request, response) => {
+    //Find with no parameters grabs every document in the scraper collection
     db.Scraper.find({})
     .then(dbScraper => {
         response.json(dbScraper)
@@ -54,6 +56,33 @@ router.get("/articles", (request, response) => {
     })
 })
 
+//We need a route to get a specific article by ID and populate it with its note
+router.get("/articles/:id", (request, response) => {
+    //Using hte id passed in the id param, prepare a query that matches the posted id
+    db.Scraper.findOne({id: request.params.id})
+    //..then we populate all of the notes associated with it note matches the key on the scraper schema
+    .populate("note").then(dbScraper => {
+        response.json(dbScraper)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+})
+
+router.post("/articles/:id", (request, respnse) => {
+    db.Note.create(request.body).then(dbNote => {
+        //If a note was created successfully, find one article with an id equal to request params.id and update the article associated with the new note.
+        //{new: true} tells us the query that we want it to return the updated article, it returns the original one otherwise.
+        //Since our mongoose query returns a promise, we can chain another .then which receives the result of the query
+
+        return db.Scraper.findOneAndUpdate({id: request.params.id}, {note: dbNote._id}, {new: true})
+        .then(dbScraper => {
+            respnse.json(dbScraper)
+        }).catch(error => {
+            response.json(error)
+        })
+    })
+})
 
 //need this for the server
 module.exports = router
