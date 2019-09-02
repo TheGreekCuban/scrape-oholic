@@ -29,7 +29,7 @@ router.get("/scrape", function (request, response) {
             result.meta = $(element).find(".trd-article-body").find(".trd-article-meta").text()
             //Create a new Scraper using the result obj built from scraping
             db.Scraper.create(result).then((dbScraper => {
-                console.log(dbScraper)
+                console.log("Db Scraper: ", dbScraper)
             })).catch(error => {
                 console.log(error, "this is the error")
             })
