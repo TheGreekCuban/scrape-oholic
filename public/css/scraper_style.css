@@ -1,6 +1,7 @@
 body {
     background-image: url(../assets/img/Real-Estate.jpg);
     background-size: 100%;
+    margin: 0px;
 }
 
 .navbar {
@@ -11,6 +12,10 @@ body {
     opacity: 0.8;
     grid-gap: 20px;
     padding: 0px 10px;
+}
+
+a:hover {
+    color: blue;
 }
 
 .links {
@@ -30,9 +35,11 @@ body {
     padding: 0px 30px;
 }
 
-.wrapper {
+/* BELOW IS ALL CONTENT FOR INDEX.HANDLEBARS */
+.indexWrapper {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: minmax(200px, 0px) 1fr 1fr;
     font-family: Georgia, Times, "Times New Roman", serif;
     background-color: #e4e4e4;
     opacity: 0.8;
@@ -41,8 +48,25 @@ body {
     margin: 10px 0px;
 }
 
+.sub-text {
+    padding: 5px 40px;
+    font-size: 150%;
+}
+
+.title {
+    font-size: 40px;
+}
+
 .introInfo {
     grid-column-start: 2;
     grid-column-end: 6;
+    grid-row-start: 2;
+    grid-row-end: 3;
     text-align: center;
+    border: black 3px solid;
+    border-radius: 25px;
 }
+
+/* BELOW IS ALL CONTENT FOR ARTICLES.HANDLEBARS */
+
+/* BELOW IS ALL CONTENT FOR SCRAPER.HANDLEBARS */

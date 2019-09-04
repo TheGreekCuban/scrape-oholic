@@ -8,6 +8,11 @@ const db = require("../models")
 const axios = require("axios")
 const cheerio = require("cheerio")
 
+//We need route for the home page
+router.get("/index", (request, response) => {
+    response.render("index")
+})
+
 //We need a get route for scraping the Rotoworld News
 router.get("/scrape", function (request, response) {
     //First we grab the body of the html with axios
@@ -42,7 +47,7 @@ router.get("/scrape", function (request, response) {
             })
         })
     })
-    response.send("Scrape Complete!")
+    response.render("scrape")
 })
 
 //We need a get route to get all the articles from the DB
@@ -50,7 +55,7 @@ router.get("/articles", (request, response) => {
     //Find with no parameters grabs every document in the scraper collection
     db.Scraper.find({})
     .then(dbScraper => {
-        response.render("index", dbScraper)
+        response.render("articles", dbScraper)
     }).catch(error => {
         response.json(error)
     })
