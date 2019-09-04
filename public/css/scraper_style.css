@@ -1,0 +1,48 @@
+body {
+    background-image: url(../assets/img/Real-Estate.jpg);
+    background-size: 100%;
+}
+
+.navbar {
+    display: grid;
+    min-height: 80px;
+    grid-auto-flow: column;
+    background-color: #e4e4e4;
+    opacity: 0.8;
+    grid-gap: 20px;
+    padding: 0px 10px;
+}
+
+.links {
+    display: grid;
+    grid-gap: 20px;
+    grid-auto-flow: column;
+    align-content: center;
+    justify-content: end;
+    font-size: 110%;
+}
+
+.logo {
+    display: grid;
+    grid-auto-flow: column;
+    align-content: center;
+    justify-content: start;
+    padding: 0px 30px;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-family: Georgia, Times, "Times New Roman", serif;
+    background-color: #e4e4e4;
+    opacity: 0.8;
+    grid-gap: 20px;
+    padding: 0px 10px;
+    margin: 10px 0px;
+}
+
+.introInfo {
+    grid-column-start: 2;
+    grid-column-end: 6;
+    text-align: center;
+}

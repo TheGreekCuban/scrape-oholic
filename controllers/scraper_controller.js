@@ -50,7 +50,7 @@ router.get("/articles", (request, response) => {
     //Find with no parameters grabs every document in the scraper collection
     db.Scraper.find({})
     .then(dbScraper => {
-        response.json(dbScraper)
+        response.render("index", dbScraper)
     }).catch(error => {
         response.json(error)
     })
