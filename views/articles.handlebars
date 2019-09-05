@@ -1,14 +1,16 @@
-<div class="wrapper">
-    <div id="articles">
+<div class="articleWrapper">
+    <div class="articles">
         {{#each articles}}
         <div class="card">
-            <div class="container">
-                <h4>{{this.title}}</h4>
-                <p>Article ID: {{this.id}}</p>
-                <p>Article Description: {{this.description}}</p>
-                <a href="{{this.link}}" class="articleLinks">Link To Article</a>
+            <h4>{{this.title}}</h4>
+            <p>Article ID: {{this.id}}</p>
+            <p>Article Description: {{this.description}}</p>
+            <a href="{{this.link}}" class="articleLinks">Link To Article</a>
+            <div class="buttonsDiv">
+                <button type="button">Article Notes</button>
+                <button type="button">Delete From Saved</button>
             </div>
         </div>
+        {{/each}}
     </div>
-       {{/each}}
 </div>
