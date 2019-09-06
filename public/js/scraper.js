@@ -1,9 +1,12 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
-  $.ajax({
-    type: "GET",
-    url: "/articles",
-  }).then(data => {
-    console.log(data)
+  //Adding click handler for scraperLink - this will call the API for the data.
+  $(".scraperLink").click(function () {
+    return $.ajax({
+      type: "GET",
+      url: "/scrape",
+    }).then(function(data) {
+      console.log("COUNT: ", data)
+    })
   })
 })

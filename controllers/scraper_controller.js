@@ -8,15 +8,22 @@ const db = require("../models")
 const axios = require("axios")
 const cheerio = require("cheerio")
 
-//We need route for the home page
-router.get("/", (request, response) => {
-    response.render("index")
-})
+//HTML ROUTES BELOW:
 
-//We need a get route for scraping the Rotoworld News
-router.get("/scrape", function (request, response) {
+//We need route for the home page
+router.get("/", (request, response) => response.render("index"))
+
+//We need a route to render the saved articles page
+router.get("articles", (request, response) => res.render("articles"));
+
+
+//API ROUTES BELOW:
+
+//We need a get route for scraping the TheRealDeal News
+router.get("/scrape", (request, response) => {
+
     //First we grab the body of the html with axios
-    axios.get("https://therealdeal.com/").then(function (response) {
+    axios.get("https://therealdeal.com/").then(response => {
         //Then we load that into cheerio and save it to $ for the shorthand selector
         let $ = cheerio.load(response.data)
         let grabbedElement = $(".trd-article-lists-content").find("a")
@@ -24,7 +31,7 @@ router.get("/scrape", function (request, response) {
         removedItem.remove()
 
         //Now, we grab every headline title tag and do the following
-        $(grabbedElement).each(function (i, element) {
+        $(grabbedElement).each((i, element) => {
 
             //Save an empty result object
             const result = {}
@@ -34,26 +41,35 @@ router.get("/scrape", function (request, response) {
             result.link = $(element).attr("href")
             result.description = $(element).find(".trd-article-body").find(".trd-article-excerpt").text()
             result.meta = $(element).find(".trd-article-body").find(".trd-article-meta").text()
-            //Create a new Scraper using the result obj built from scraping
-
-            db.Scraper.findOne({
-                title: result.title
-            }, (error, existingArticle) => {
+            
+            //Create a new Scraper using the result obj built from scraping. First we search for a match by using findOne, if there is no match in the database then we create a new collection.
+            db.Scraper.findOne({title: result.title}, (error, existingArticle) => {
                 if (existingArticle === null) {
-                    db.Scraper.create(result).then((dbScraper => {
-                        console.log("Db Scraper: ", dbScraper)
-                    })).catch(error => {
+                    db.Scraper.create(result).then(dbScraper => {
+                        console.log(`DB: ${dbScraper}`)
+                    }).catch(error => {
                         console.log(`No duplicate entries allowed!`)
                     })
                 }
             })
         })
     })
-    response.render("scrape")
+    response.send("Scrape Complete!")
 })
 
 //We need a get route to get all the articles from the DB
-router.get("/articles", (request, response) => {
+router.get("/showscraped", (request, response) => {
+    //Find with no parameters grabs every document in the scraper collection
+    db.Scraper.find({})
+        .then(dbScraper => {
+            response.render("index", {articles: dbScraper})
+        }).catch(error => {
+            response.json(error)
+        })
+})
+
+//We need a get route to get all the SAVED articles from the DB
+router.get("/savedarticles", (request, response) => {
     //Find with no parameters grabs every document in the scraper collection
     db.Scraper.find({}).populate("note")
         .then(dbScraper => {
@@ -80,10 +96,10 @@ router.get("/articles/:id", (request, response) => {
 
 router.post("/articles/:id", (request, respnse) => {
     db.Note.create(request.body).then(dbNote => {
+
         //If a note was created successfully, find one article with an id equal to request params.id and update the article associated with the new note.
         //{new: true} tells us the query that we want it to return the updated article, it returns the original one otherwise.
         //Since our mongoose query returns a promise, we can chain another .then which receives the result of the query
-
         return db.Scraper.findOneAndUpdate({
                 id: request.params.id
             }, {
@@ -100,15 +116,15 @@ router.post("/articles/:id", (request, respnse) => {
 })
 
 // Route for deleting the note
-router.put("/articles/note/:id", function (request, response) {
+router.put("/articles/note/:id", (request, response) => {
 
     db.Note.remove({
             _id: request.params.id
         })
-        .then(function (dbScraper) {
+        .then(dbScraper => {
             response.json(dbScraper);
         })
-        .catch(function (error) {
+        .catch(error => {
             response.json(error);
         });
 });

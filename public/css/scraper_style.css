@@ -2,6 +2,7 @@ body {
     background-image: url(../assets/img/Real-Estate.jpg);
     background-size: 100%;
     display: grid;
+    grid-auto-flow: row;
     margin: 0;
 }
 
@@ -39,8 +40,7 @@ a:hover {
 /* BELOW IS ALL CONTENT FOR INDEX.HANDLEBARS */
 .indexWrapper {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: minmax(100px, 0px) 1fr 1fr;
+    grid-auto-flow: column;
     font-family: Georgia, Times, "Times New Roman", serif;
     background-color: #e4e4e4;
     opacity: 0.8;
@@ -59,6 +59,7 @@ a:hover {
 }
 
 .introInfo {
+
     grid-column-start: 2;
     grid-column-end: 6;
     grid-row-start: 2;
@@ -96,4 +97,15 @@ a:hover {
 .buttonsDiv {
     float: right;
 }
+
 /* BELOW IS ALL CONTENT FOR SCRAPER.HANDLEBARS */
+.scrapedArticleWrapper {
+    grid-row-start: 2;
+    grid-auto-flow: row;
+    font-family: Georgia, Times, "Times New Roman", serif;
+    background-color: #e4e4e4;
+    opacity: 0.8;
+    grid-gap: 20px;
+    padding: 0px 10px;
+    margin: 10px 0px;
+}
