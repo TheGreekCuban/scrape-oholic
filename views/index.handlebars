@@ -8,20 +8,18 @@
             </p>
         </div>
     </div>
-    <div class="scrapedArticleWrapper">
-        <div class="articles">
-            {{#each articles}}
-            <div class="card">
-                <h4>{{this.title}}</h4>
-                <p>Article ID: {{this.id}}</p>
-                <p>Article Description: {{this.description}}</p>
-                <a href="{{this.link}}" class="articleLinks">Link To Article</a>
-                <div class="buttonsDiv">
-                    <button type="button">Article Notes</button>
-                    <button type="button">Delete From Saved</button>
-                </div>
+    <div class="articles">
+        {{#each articles}}
+        <div class="card">
+            <h4>{{this.title}}</h4>
+            <p>Article ID: {{this.id}}</p>
+            <p>Article Description: {{this.description}}</p>
+            <a href="{{this.link}}" class="articleLinks">Link To Article</a>
+            <div class="buttonsDiv">
+                <button type="button">Article Notes</button>
+                <button type="button">Delete From Saved</button>
             </div>
-            {{/each}}
         </div>
+        {{/each}}
     </div>
 </div>

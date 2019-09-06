@@ -41,6 +41,7 @@ a:hover {
 .indexWrapper {
     display: grid;
     grid-auto-flow: column;
+    grid-template-columns: repeat(8, 1fr);
     font-family: Georgia, Times, "Times New Roman", serif;
     background-color: #e4e4e4;
     opacity: 0.8;
@@ -61,7 +62,7 @@ a:hover {
 .introInfo {
 
     grid-column-start: 2;
-    grid-column-end: 6;
+    grid-column-end: 8;
     grid-row-start: 2;
     grid-row-end: 3;
     text-align: center;
@@ -70,21 +71,11 @@ a:hover {
 }
 
 /* BELOW IS ALL CONTENT FOR ARTICLES.HANDLEBARS */
-.articleWrapper {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-auto-flow: column;
-    font-family: Georgia, Times, "Times New Roman", serif;
-    background-color: #e4e4e4;
-    opacity: 0.8;
-    grid-gap: 20px;
-    padding: 0px 10px;
-    margin: 10px 0px;
-}
 
 .articles {
     grid-column-start: 2;
     grid-column-end: 8;
+    grid-row-start: 3;
 }
 
 .card {
@@ -92,6 +83,7 @@ a:hover {
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
+    background-color: aqua;
 }
 
 .buttonsDiv {
