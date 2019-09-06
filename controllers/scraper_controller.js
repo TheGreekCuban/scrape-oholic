@@ -71,9 +71,9 @@ router.get("/showscraped", (request, response) => {
 //We need a get route to get all the SAVED articles from the DB
 router.get("/savedarticles", (request, response) => {
     //Find with no parameters grabs every document in the scraper collection
-    db.Scraper.find({}).populate("note")
+    db.Scraper.find({saved: true}).populate("note")
         .then(dbScraper => {
-            response.render("articles", {articles: dbScraper})
+          response.render("articles", {articles: dbScraper})
         }).catch(error => {
             response.json(error)
         })
