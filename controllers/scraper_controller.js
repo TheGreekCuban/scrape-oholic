@@ -115,6 +115,18 @@ router.post("/articles/:id", (request, respnse) => {
     })
 })
 
+
+//Need a route for changing saved from false to true
+router.post("/saved/:id", (request, response) => {
+
+    return db.Scraper.findByIdAndUpdate(request.params.id, {saved: request.body.saved}, {new: true})
+        .then(dbScraper => {
+            console.log(dbScraper)
+            response.json(dbScraper)
+        }).catch(error => {
+            response.json(error)
+        })
+})
 // Route for deleting the note
 router.put("/articles/note/:id", (request, response) => {
 
