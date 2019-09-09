@@ -30,7 +30,7 @@ $(document).ready(function () {
 
     return $.ajax({
       type: "PUT",
-      url: "articles/delete/" + id,
+      url: "/articles/delete/" + id,
       id: id
     }).then($(this).closest(".card").remove())
   })

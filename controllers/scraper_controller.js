@@ -128,8 +128,17 @@ router.post("/saved/:id", (request, response) => {
         })
 })
 
-// Route for deleting the note
+//Need a route for changing saved from false to true
 router.put("/articles/delete/:id", (request, response) => {
+console.log(request.params.id)
+    return db.Scraper.deleteOne({"_id": request.params.id}, (error => {
+        response.json(error)
+    }), {new: true})
+})
+
+
+// Route for deleting the note
+router.put("/articles/note/:id", (request, response) => {
 
     db.Note.remove({
             _id: request.params.id
