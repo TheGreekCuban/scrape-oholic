@@ -60,7 +60,7 @@ router.get("/scrape", (request, response) => {
 //We need a get route to get all the articles from the DB
 router.get("/showscraped", (request, response) => {
     //Find with no parameters grabs every document in the scraper collection
-    db.Scraper.find({})
+    db.Scraper.find({saved: false})
         .then(dbScraper => {
             response.render("index", {articles: dbScraper})
         }).catch(error => {
@@ -127,8 +127,9 @@ router.post("/saved/:id", (request, response) => {
             response.json(error)
         })
 })
+
 // Route for deleting the note
-router.put("/articles/note/:id", (request, response) => {
+router.put("/articles/delete/:id", (request, response) => {
 
     db.Note.remove({
             _id: request.params.id

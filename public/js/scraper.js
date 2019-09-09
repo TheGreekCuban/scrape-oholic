@@ -5,15 +5,15 @@ $(document).ready(function () {
     return $.ajax({
       type: "GET",
       url: "/scrape",
-    }).then(function(data) {
+    }).then(function (data) {
       console.log("COUNT: ", data)
     })
   })
- 
+
   //Adding a post request in order to update the saved value in each article object...
-  $(".saveButton").click(function() {
+  $(".saveButton").click(function () {
     let id = $(this).attr("id")
-  
+
     return $.ajax({
       type: "POST",
       url: "/saved/" + id,
@@ -23,9 +23,15 @@ $(document).ready(function () {
       }
     }).then($(this).closest(".card").remove())
   })
-})
 
-//Adding a function to remove the card after it is saved.
-const removeCard = () => {
-  $(this).closest(".card").remove()
-}
+  //Adding a post route in order to delete the article from the DB
+  $(".deleteArticle").click(function () {
+    let id = $(this).attr("id")
+
+    return $.ajax({
+      type: "PUT",
+      url: "articles/delete/" + id,
+      id: id
+    }).then($(this).closest(".card").remove())
+  })
+})
