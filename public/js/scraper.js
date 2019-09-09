@@ -13,7 +13,7 @@ $(document).ready(function () {
   //Adding a post request in order to update the saved value in each article object...
   $(".saveButton").click(function() {
     let id = $(this).attr("id")
-
+  
     return $.ajax({
       type: "POST",
       url: "/saved/" + id,
@@ -21,6 +21,11 @@ $(document).ready(function () {
       data: {
         saved: true
       }
-    })
+    }).then($(this).closest(".card").remove())
   })
 })
+
+//Adding a function to remove the card after it is saved.
+const removeCard = () => {
+  $(this).closest(".card").remove()
+}
