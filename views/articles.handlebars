@@ -7,10 +7,20 @@
             <p>Article Description: {{this.description}}</p>
             <a href="{{this.link}}" class="articleLinks">Link To Article</a>
             <div class="buttonsDiv">
-                <button type="button" class="openNotes">Article Notes</button>
+                <button type="button" class="addNote" id="{{this.id}}">Add A Note</button>
                 <button type="button" class="deleteArticle" id="{{this.id}}">Delete From Saved</button>
             </div>
         </div>
         {{/each}}
+
+        <div class="notesModalBackground">
+            <div class="notesModalContent">
+                <form action="/articles/note/:id" method="post">
+                    Title <input type="text" name="title" class="notesTitle"><br>
+                    Note <textarea class="notesText"></textarea><br>
+                </form>
+                <button type="button" class="submitNote">Save Note!</button>
+            </div>
+        </div>
     </div>
 </div>

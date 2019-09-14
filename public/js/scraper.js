@@ -36,3 +36,11 @@ $(document).ready(function () {
     }).then($(this).closest(".card").remove())
   })
 })
+
+//Adding onclick to display modal with the appropriate attributes
+$(".addNote").click(function(){
+  let articleId = $(this).attr("id")
+  $(".submitNote").attr("articleId", articleId)
+  $(".notesModalBackground").css("display", "grid")
+  console.log(articleId)
+});
