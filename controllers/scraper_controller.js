@@ -87,13 +87,14 @@ router.get("/articles/:id", (request, response) => {
         })
         //..then we populate all of the notes associated with it note matches the key on the scraper schema
         .populate("note").then(dbScraper => {
-            response.send(dbScraper)
+            response.render("notes", {notes: dbScraper})
         })
         .catch(error => {
             response.json(error)
         })
 })
 
+//Need a route to create a note at the specific article we click on!
 router.post("/articles/:id", (request, respnse) => {
     db.Note.create(request.body).then(dbNote => {
 
@@ -133,7 +134,7 @@ router.put("/articles/delete/:id", (request, response) => {
 console.log(request.params.id)
     return db.Scraper.deleteOne({"_id": request.params.id}, (error => {
         response.json(error)
-    }), {new: true})
+    }))
 })
 
 

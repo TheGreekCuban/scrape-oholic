@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
   //Adding click handler for scraperLink - this will call the API for the data.
-  $(".scraperLink").click(function () {
+  $(".scraperLink").click(function (e) {
+    e.preventDefault()
     return $.ajax({
       type: "GET",
       url: "/scrape",

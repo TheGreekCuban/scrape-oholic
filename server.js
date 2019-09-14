@@ -44,5 +44,5 @@ app.use(routes)
 
 // Start the server
 app.listen(PORT, function () {
-    console.log("App listening on http://localhost:" + PORT + "/index");
+    console.log("App listening on http://localhost:" + PORT + "/");
 });
