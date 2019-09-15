@@ -141,10 +141,26 @@ a:hover {
 
   .note {
       width: 60%;
-      text-align: center;
       margin: 20px auto;
-      border: white solid 4px;
-      
+      padding: 0px 10px;
+      border: white solid 4px; 
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+  }
+
+  .deleteNote {
+      grid-column-start: 4;
+      grid-row-start: 3; 
+      align-self: center;
+      margin: 0 5px;
+  }
+
+  #savedNoteBody {
+    grid-column-start: 1;
+    grid-row-start: 2;
+    grid-column-end: 5; 
+    
   }
 
 /* BELOW IS ALL CONTENT FOR SCRAPER.HANDLEBARS */

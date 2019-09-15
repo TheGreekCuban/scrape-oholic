@@ -59,5 +59,19 @@ $(".submitNote").click(function() {
       title: title,
       body: body
     }
-  }).then($(".notesModalBackground").css("display", "none"))
+  }).then(function(data) {
+  location.reload()
+  })
+})
+
+//Adding onclick to delete the note from its article
+$(".deleteNote").click(function() {
+  let id = $(this).attr("id")
+
+  return $.ajax({
+    type: "PUT",
+    url: "/articles/note/" + id
+  }).then(function(data) {
+  location.reload()
+  })
 })

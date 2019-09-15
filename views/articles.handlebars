@@ -13,8 +13,9 @@
             {{#if this.note}}
                 {{#each this.note}}
                 <div class="note">
-                    <h4>{{this.title}}</h4>
-                    <p>{{this.body}}</p>
+                    <h4 id="savedNoteTitle">{{this.title}}</h4>
+                    <p id="savedNoteBody">{{this.body}}</p>
+                    <button type="button" class="deleteNote" id="{{this.id}}">Delete Note</button>
                 </div>
                 {{/each}}
             {{/if}}
