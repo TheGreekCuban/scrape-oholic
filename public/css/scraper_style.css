@@ -139,6 +139,14 @@ a:hover {
     box-sizing: border-box
   }
 
+  .note {
+      width: 60%;
+      text-align: center;
+      margin: 20px auto;
+      border: white solid 4px;
+      
+  }
+
 /* BELOW IS ALL CONTENT FOR SCRAPER.HANDLEBARS */
 .scrapedArticleWrapper {
     grid-row-start: 2;

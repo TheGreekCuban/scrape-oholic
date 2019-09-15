@@ -44,3 +44,20 @@ $(".addNote").click(function(){
   $(".notesModalBackground").css("display", "grid")
   console.log(articleId)
 });
+
+//Adding onclick to save the note to it's respective article in the DB.
+$(".submitNote").click(function() {
+  let id = $(this).attr("articleId")
+  let title = $(".notesTitle").val().trim()
+  let body = $(".notesText").val().trim()
+  console.log(`Notes Body: ${body}`)
+  return $.ajax({
+    type: "POST",
+    url: "/articles/note/" + id,
+    id: id,
+    data: {
+      title: title,
+      body: body
+    }
+  }).then($(".notesModalBackground").css("display", "none"))
+})

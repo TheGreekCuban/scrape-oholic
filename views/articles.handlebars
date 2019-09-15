@@ -10,6 +10,14 @@
                 <button type="button" class="addNote" id="{{this.id}}">Add A Note</button>
                 <button type="button" class="deleteArticle" id="{{this.id}}">Delete From Saved</button>
             </div>
+            {{#if this.note}}
+                {{#each this.note}}
+                <div class="note">
+                    <h4>{{this.title}}</h4>
+                    <p>{{this.body}}</p>
+                </div>
+                {{/each}}
+            {{/if}}
         </div>
         {{/each}}
 

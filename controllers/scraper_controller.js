@@ -73,6 +73,7 @@ router.get("/savedarticles", (request, response) => {
     //Find with no parameters grabs every document in the scraper collection
     db.Scraper.find({saved: true}).populate("note")
         .then(dbScraper => {
+            console.log(dbScraper)
           response.render("articles", {articles: dbScraper})
         }).catch(error => {
             response.json(error)
@@ -87,7 +88,7 @@ router.get("/articles/:id", (request, response) => {
         })
         //..then we populate all of the notes associated with it note matches the key on the scraper schema
         .populate("note").then(dbScraper => {
-            response.render("notes", {notes: dbScraper})
+            response.send(dbScraper)
         })
         .catch(error => {
             response.json(error)
@@ -95,21 +96,15 @@ router.get("/articles/:id", (request, response) => {
 })
 
 //Need a route to create a note at the specific article we click on!
-router.post("/articles/:id", (request, respnse) => {
+router.post("/articles/note/:id", (request, response) => {
+    console.log(request.body)
     db.Note.create(request.body).then(dbNote => {
-
         //If a note was created successfully, find one article with an id equal to request params.id and update the article associated with the new note.
         //{new: true} tells us the query that we want it to return the updated article, it returns the original one otherwise.
         //Since our mongoose query returns a promise, we can chain another .then which receives the result of the query
-        return db.Scraper.findOneAndUpdate({
-                id: request.params.id
-            }, {
-                note: dbNote._id
-            }, {
-                new: true
-            })
+        return db.Scraper.findByIdAndUpdate(request.params.id, {$push: {note: dbNote._id}}, {new: true})
             .then(dbScraper => {
-                respnse.json(dbScraper)
+                response.send(dbScraper)
             }).catch(error => {
                 response.json(error)
             })
