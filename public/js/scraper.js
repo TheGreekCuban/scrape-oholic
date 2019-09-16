@@ -6,9 +6,14 @@ $(document).ready(function () {
     return $.ajax({
       type: "GET",
       url: "/scrape",
-    }).then(function (data) {
-      console.log("COUNT: ", data)
-    })
+    }).then(function (data) {})
+  })
+
+  $.ajax({
+    type: "GET",
+    url: "/showscraped"
+  }).then(function(data) {
+    //console.log(data)
   })
 
   //Adding a post request in order to update the saved value in each article object...

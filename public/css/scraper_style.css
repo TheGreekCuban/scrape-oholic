@@ -37,6 +37,18 @@ a:hover {
     padding: 0px 30px;
 }
 
+.scraperLink {
+    background-color: red;
+    border: black solid 2px;
+    padding: 10px 5px;
+    color: white;
+}
+
+.showArticles,
+.savedArticlesLink {
+    padding: 10px 5px;
+}
+
 /* BELOW IS ALL CONTENT FOR INDEX.HANDLEBARS */
 .indexWrapper {
     display: grid;
@@ -155,12 +167,21 @@ a:hover {
       align-self: center;
       margin: 0 5px;
   }
+  
+  .scrapeCount {
+      text-align: center;
+  }
 
   #savedNoteBody {
     grid-column-start: 1;
     grid-row-start: 2;
     grid-column-end: 5; 
-    
+  }
+
+  #savedNoteTitle {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-column-end: 5; 
   }
 
 /* BELOW IS ALL CONTENT FOR SCRAPER.HANDLEBARS */

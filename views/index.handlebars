@@ -9,6 +9,11 @@
         </div>
     </div>
     <div class="articles">
+        
+        {{#if totalArticles}}
+        <h2 class="scrapeCount">Total Articles Scraped: {{totalArticles}}</h2>
+        {{/if}}
+
         {{#each articles}}
         <div class="card">
             <h4>{{this.title}}</h4>
@@ -20,5 +25,7 @@
             </div>
         </div>
         {{/each}}
+
+        
     </div>
 </div>

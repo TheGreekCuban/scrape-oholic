@@ -21,7 +21,6 @@ router.get("articles", (request, response) => res.render("articles"));
 
 //We need a get route for scraping the TheRealDeal News
 router.get("/scrape", (request, response) => {
-
     //First we grab the body of the html with axios
     axios.get("https://therealdeal.com/").then(response => {
         //Then we load that into cheerio and save it to $ for the shorthand selector
@@ -46,9 +45,9 @@ router.get("/scrape", (request, response) => {
             db.Scraper.findOne({title: result.title}, (error, existingArticle) => {
                 if (existingArticle === null) {
                     db.Scraper.create(result).then(dbScraper => {
-                        console.log(`DB: ${dbScraper.length}`)
+                        count += 1
                     }).catch(error => {
-                        
+                        console.log(error)
                     })
                 }
             })
@@ -63,7 +62,7 @@ router.get("/showscraped", (request, response) => {
     db.Scraper.find({saved: false})
         .then(dbScraper => {
             console.log("DB SCRAPER: ", dbScraper.length)
-            response.render("index", {articles: dbScraper})
+            response.render("index", {articles: dbScraper, totalArticles: dbScraper.length})
         }).catch(error => {
             response.json(error)
         })
