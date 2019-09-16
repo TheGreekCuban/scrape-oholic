@@ -38,7 +38,7 @@ $(document).ready(function () {
 })
 
 //Adding onclick to display modal with the appropriate attributes
-$(".addNote").click(function(){
+$(".addNote").click(function () {
   let articleId = $(this).attr("id")
   $(".submitNote").attr("articleId", articleId)
   $(".notesModalBackground").css("display", "grid")
@@ -46,7 +46,7 @@ $(".addNote").click(function(){
 });
 
 //Adding onclick to save the note to it's respective article in the DB.
-$(".submitNote").click(function() {
+$(".submitNote").click(function () {
   let id = $(this).attr("articleId")
   let title = $(".notesTitle").val().trim()
   let body = $(".notesText").val().trim()
@@ -59,19 +59,19 @@ $(".submitNote").click(function() {
       title: title,
       body: body
     }
-  }).then(function(data) {
-  location.reload()
+  }).then(function (data) {
+    location.reload()
   })
 })
 
 //Adding onclick to delete the note from its article
-$(".deleteNote").click(function() {
+$(".deleteNote").click(function () {
   let id = $(this).attr("id")
 
   return $.ajax({
     type: "PUT",
     url: "/articles/note/" + id
-  }).then(function(data) {
-  location.reload()
+  }).then(function (data) {
+    location.reload()
   })
 })

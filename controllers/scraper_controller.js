@@ -46,9 +46,9 @@ router.get("/scrape", (request, response) => {
             db.Scraper.findOne({title: result.title}, (error, existingArticle) => {
                 if (existingArticle === null) {
                     db.Scraper.create(result).then(dbScraper => {
-                        console.log(`DB: ${dbScraper}`)
+                        console.log(`DB: ${dbScraper.length}`)
                     }).catch(error => {
-                        console.log(`No duplicate entries allowed!`)
+                        
                     })
                 }
             })
@@ -62,6 +62,7 @@ router.get("/showscraped", (request, response) => {
     //Find with no parameters grabs every document in the scraper collection
     db.Scraper.find({saved: false})
         .then(dbScraper => {
+            console.log("DB SCRAPER: ", dbScraper.length)
             response.render("index", {articles: dbScraper})
         }).catch(error => {
             response.json(error)
