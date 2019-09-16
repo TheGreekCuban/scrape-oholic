@@ -40,9 +40,11 @@ router.get("/scrape", (request, response) => {
             result.link = $(element).attr("href")
             result.description = $(element).find(".trd-article-body").find(".trd-article-excerpt").text()
             result.meta = $(element).find(".trd-article-body").find(".trd-article-meta").text()
-            
+
             //Create a new Scraper using the result obj built from scraping. First we search for a match by using findOne, if there is no match in the database then we create a new collection.
-            db.Scraper.findOne({title: result.title}, (error, existingArticle) => {
+            db.Scraper.findOne({
+                title: result.title
+            }, (error, existingArticle) => {
                 if (existingArticle === null) {
                     db.Scraper.create(result).then(dbScraper => {
                         count += 1
@@ -59,10 +61,15 @@ router.get("/scrape", (request, response) => {
 //We need a get route to get all the articles from the DB
 router.get("/showscraped", (request, response) => {
     //Find with no parameters grabs every document in the scraper collection
-    db.Scraper.find({saved: false})
+    db.Scraper.find({
+            saved: false
+        })
         .then(dbScraper => {
             console.log("DB SCRAPER: ", dbScraper.length)
-            response.render("index", {articles: dbScraper, totalArticles: dbScraper.length})
+            response.render("index", {
+                articles: dbScraper,
+                totalArticles: dbScraper.length
+            })
         }).catch(error => {
             response.json(error)
         })
@@ -71,10 +78,14 @@ router.get("/showscraped", (request, response) => {
 //We need a get route to get all the SAVED articles from the DB
 router.get("/savedarticles", (request, response) => {
     //Find with no parameters grabs every document in the scraper collection
-    db.Scraper.find({saved: true}).populate("note")
+    db.Scraper.find({
+            saved: true
+        }).populate("note")
         .then(dbScraper => {
             console.log(dbScraper)
-          response.render("articles", {articles: dbScraper})
+            response.render("articles", {
+                articles: dbScraper
+            })
         }).catch(error => {
             response.json(error)
         })
@@ -102,7 +113,13 @@ router.post("/articles/note/:id", (request, response) => {
         //If a note was created successfully, find one article with an id equal to request params.id and update the article associated with the new note.
         //{new: true} tells us the query that we want it to return the updated article, it returns the original one otherwise.
         //Since our mongoose query returns a promise, we can chain another .then which receives the result of the query
-        return db.Scraper.findByIdAndUpdate(request.params.id, {$push: {note: dbNote._id}}, {new: true})
+        return db.Scraper.findByIdAndUpdate(request.params.id, {
+                $push: {
+                    note: dbNote._id
+                }
+            }, {
+                new: true
+            })
             .then(dbScraper => {
                 response.send(dbScraper)
             }).catch(error => {
@@ -115,7 +132,11 @@ router.post("/articles/note/:id", (request, response) => {
 //Need a route for changing saved from false to true
 router.post("/saved/:id", (request, response) => {
 
-    return db.Scraper.findByIdAndUpdate(request.params.id, {saved: request.body.saved}, {new: true})
+    return db.Scraper.findByIdAndUpdate(request.params.id, {
+            saved: request.body.saved
+        }, {
+            new: true
+        })
         .then(dbScraper => {
             console.log(dbScraper)
             response.json(dbScraper)
@@ -126,10 +147,14 @@ router.post("/saved/:id", (request, response) => {
 
 //Need a route for changing saved from false to true aka deleting it from the saved page
 router.put("/articles/delete/:id", (request, response) => {
-console.log(request.params.id)
-    return db.Note.deleteOne(request.params.id, (error => {
-        response.json(error)
-    }))
+    console.log(request.params.id)
+    return db.Scraper.findByIdAndRemove(request.params.id)
+        .then(dbScraper => {
+            console.log(dbScraper)
+            response.json(dbScraper)
+        }).catch(error => {
+            response.json(error)
+        })
 })
 
 
